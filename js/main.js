@@ -21,10 +21,10 @@ class Shoes{
                     <img src="images/${this.img}" alt="airmax ${this.name}">
                 </article>
                 <ul class="detail">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <li class="detail_img"><img src="images/${this.name}_0.png" art="${this.name} both side"</li>
+                    <li class="detail_img"><img src="images/${this.name}_1.png" art="${this.name} bottom side"</li>
+                    <li class="detail_img"><img src="images/${this.name}_2.png" art="${this.name} up side"</li>
+                    <li class="detail_img"><img src="images/${this.name}_3.png" art="${this.name} back side"</li>
                 </ul>
             </div>
             <div class="shopping">
@@ -75,10 +75,10 @@ class Shoes{
 }
 
 shoesGroup = [
-    new Shoes('premium','99,000','white.mp4','nike0.png'),
-    new Shoes('olympic','129,000','red.mp4','nike1.png'),
-    new Shoes('persian','129,000','blue.mp4','nike2.png'),
-    new Shoes('flax','159,000','yellow.mp4','nike3.png')
+    new Shoes('premium','99,000','white.mp4','nike_sub0.png'),
+    new Shoes('olympic','129,000','red.mp4','nike_sub1.png'),
+    new Shoes('persian','129,000','blue.mp4','nike_sub2.png'),
+    new Shoes('flax','159,000','yellow.mp4','nike_sub3.png')
 ]
 
 const mainLi = document.querySelector('.shoes');
@@ -87,6 +87,8 @@ const subject = document.querySelector('#subject');
 const video = document.querySelector('#video');
 let dataNum;
 let currentShoes;
+let smallImg;
+let bigImg;
 
 //신발 호버 이벤트
 $('.main_event').on('mouseenter',function(){
@@ -114,6 +116,7 @@ function moveAnimation(){
     subject.innerHTML = shoesGroup[currentShoes].subjectMaker()
     video.innerHTML = shoesGroup[currentShoes].videoMaker()
     topArr = [0, $('#subject').offset().top, $('.about').offset().top];
+    detailImg()
    setTimeout(function(){
        $('.video_wrap').addClass('on')
    },100)
@@ -170,3 +173,17 @@ function wheelMove(){
         $('.pic').css('position','fixed')
     }
 }
+
+//detail img 변경
+
+function detailImg(){
+    $('.detail_img').on('mouseenter',function(){
+        smallImg = $(this).children('img').attr('src');
+        bigImg = $('.pic .shoes_pic').children('img').attr('src');
+        $('.pic .shoes_pic').children('img').attr('src',smallImg);
+    })
+    $('.detail_img').on('mouseleave',function(){
+        $('.pic .shoes_pic').children('img').attr('src',bigImg);
+    })
+}
+

@@ -1,3 +1,12 @@
+$whitebg: #E4E5E8;
+$whitefont: #AEAEAE;
+$redbg: #BE4341;
+$redfont: #823130;
+$bluebg: #425194;
+$bluefont: #28315A;
+$brownbg: #A97657;
+$brownfont: #644532;
+
 @mixin font($s: 0.875rem, $w:normal, $c:null, $f:null){
     font-size: $s;
     font-weight: $w;
@@ -39,7 +48,41 @@
 @function vh($s){
     @return $s/10.24 +vh;
 }
-
+@keyframes glowEffect{
+    0%{
+        text-shadow: 0 1px 6px rgba(0,0,0,0.2);
+    }
+    50%{
+        text-shadow: 0 1px 6px rgba(255,255,255,0.5);
+    }
+    100%{
+        text-shadow: 0 1px 6px rgba(0,0,0,0.2);
+    }
+}
+@keyframes openingAnimation{
+    from{
+        height: 0%;
+    }
+    to{
+        height: 100%;
+    }
+}
+@keyframes opacity{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+@keyframes display{
+    from{
+        visibility: visible;
+    }
+    to{
+        visibility: hidden;
+    }
+}
 body{
     font-family: 'Poppins',sans-serif;
     overflow-x: hidden;
@@ -51,10 +94,12 @@ body{
 }
 #wrap{
     header{
+        animation: opacity 1s 3.2s ease-in forwards;
         @include size(100%, 60px);
         @include position(40px, 0, fixed);
         background: rgba(255,255,255, 0.4);
-        z-index: 20;
+        z-index: 10;
+        opacity: 0;
         nav{
             @include flex;
             @include font(rem(18),bold);
@@ -72,6 +117,37 @@ body{
         }
     }
     main{
+        #opening{
+            animation: display 0s 3s forwards;
+            ul{
+                @include position(0, 0, fixed);
+                @include size;
+                z-index: 15;
+                background: #fff;
+                display: flex;
+                opacity: 1;
+                li{
+                    box-shadow: -1px 0px 6px rgba(0,0,0,0.5);
+                    @include size(25%, 0%);
+                    &:nth-child(1){
+                        background: $whitebg;
+                        animation: openingAnimation 1s 0s ease-in forwards;
+                    }
+                    &:nth-child(2){
+                        background: $redbg;
+                        animation: openingAnimation 1s 0.5s ease-in forwards;
+                    }
+                    &:nth-child(3){
+                        background: $bluebg;
+                        animation: openingAnimation 1s 1s ease-in forwards;
+                    }
+                    &:nth-child(4){
+                        background: $brownbg;
+                        animation: openingAnimation 1s 1.5s ease-in forwards;
+                    }
+                }
+            }
+        }
         #visual{
             .shoes{
                 width: 100vw;
@@ -93,12 +169,14 @@ body{
                     }
                     .fixed{
                         .shoes_pic{
-                            @include position(300px, 60px);
-                            @include size(598px, 290px);
+                            @include position(vw(300), vh(60));
+                            @include size(vw(598), vw(290));
                             transform: rotate(45deg);
                             transition: 1s ease-in;
                             pointer-events: none;
                             img{
+                                animation: opacity 1s 4s ease-in forwards;
+                                opacity: 0;
                                 @include size;
                             }
                         }
@@ -107,7 +185,7 @@ body{
                         width: 110%;
                         text-shadow: 0 1px 6px rgba(0,0,0,0.2);
                         @include font(rem(50),bold);
-                        @include position(650px, 60px);
+                        @include position(vw(650), vh(60));
                         opacity: 0;
                         transition: 1s ease-in;
                         pointer-events: none;
@@ -136,40 +214,40 @@ body{
                         }
                     }
                     &:nth-child(1){
-                        background: #E4E5E8;
+                        background: $whitebg;
                         .text{
-                            color: #AEAEAE;
+                            color: $whitefont;
                         }
                         .btn{
-                            background: #AEAEAE;
+                            background: $whitefont;
                         }
                     }
                     &:nth-child(2){
-                        background: #BE4341;
+                        background: $redbg;
                         .text{
-                            color: #823130;
+                            color: $redfont;
                         }
                         .btn{
-                            background: #823130;
+                            background: $redfont;
                         }
                         
                     }
                     &:nth-child(3){
-                        background: #425194;
+                        background: $bluebg;
                         .text{
-                            color:#28315A;
+                            color:$bluefont;
                         }
                         .btn{
-                            background: #28315A;
+                            background: $bluefont;
                         }
                     }
                     &:nth-child(4){
-                        background: #A97657;
+                        background: $brownbg;
                         .text{
-                            color:#644532;
+                            color:$brownfont;
                         }
                         .btn{
-                            background: #644532;
+                            background: $brownfont;
                         }
                     }
                     &.on{
@@ -182,11 +260,13 @@ body{
                             opacity: 1;
                             z-index: 2;
                             @include position(vh(130), 46%);
+                            animation: glowEffect 2s ease-in infinite;
                         }
                         .btn{
                             visibility: visible;
                             transition: 1s 1s ease-in;
                             opacity: 1;
+                            animation: glowEffect 2s ease-in infinite;
                         }
                     }
                 }
@@ -215,10 +295,10 @@ body{
                 flex-direction: column;
                 &.premium{
                     .change_bg{
-                        background: #E4E5E8;
+                        background: $whitebg;
                         color: #707070;
                         h2{
-                            color:#aeaeae;
+                            color:$whitefont;
                         }
                     }
                     .select{
@@ -228,87 +308,100 @@ body{
                         }
                     }
                     h3{
-                        color: #aeaeae;
+                        color: $whitefont;
                     }
                 }
                 &.olympic{
                     .change_bg{
-                        background: #BE4341;
+                        background: $redbg;
                         color: #ececec;
                         h2{
-                            color:#823130;
+                            color:$redfont;
                         }
                     }
                     .select{
-                        color: #823130;
+                        color: $redfont;
                         select{
-                            color: #823130;
+                            color: $redfont;
                         }
                     }
                     h3{
-                        color: #823130;
+                        color: $redfont;
                     }
                 }
                 &.persian{
                     .change_bg{
-                        background: #425194;
+                        background: $bluebg;
                         color: #ececec;
                         h2{
-                            color:#28315A;
+                            color:$bluefont;
                         }
                     }
                     .select{
-                        color: #28315A;
+                        color: $bluefont;
                         select{
-                            color: #28315A;
+                            color: $bluefont;
                         }
                     }
                     h3{
-                        color: #28315A;
+                        color: $bluefont;
                     }
                 }
                 &.flax{
                     .change_bg{
-                        background: #A97657;
+                        background: $brownbg;
                         color: #ececec;
                         h2{
-                            color:#644532;
+                            color:$brownfont;
                         } 
                     }
                     .select{
-                        color: #644532;
+                        color: $brownfont;
                         select{
-                            color: #644532;
+                            color: $brownfont;
                         }
                     }
                     h3{
-                        color: #644532;
+                        color: $brownfont;
                     }
                 }
                 .subject_bg{
                     @include size(100vw, 25%);
                     h2{
-                        margin-left: 56%;
+                        margin-left: vw(1100);
                         margin-top: 10%;
                         text-shadow: 0 1px 6px rgba(0,0,0,0.2);
                         @include font(rem(80),bold);
+                        animation: glowEffect 2s ease-in infinite;
                     }
                 }
                 .pic{
-                    @include position(30vh, 16.7%, absolute);
+                    @include position(16vh, 16.7%, absolute);
+                    width: vw(598);
+                    @include flex;
+                    flex-wrap: wrap;
+                    .shoes_pic{
+                        @include size(vw(598), vw(598));
+                        >img{
+                            @include size(vw(598), auto);  
+                        }
+                    }
                     .detail{
                         @include flex(space-between);
                         @include size(100%, vh(120));
-                        margin-top: vh(160);
                         li{
                             @include size(vh(120), vh(120));
                             border: 1px solid #707070;
+                            img{
+                                @include size;
+                                pointer-events: none;
+                            }
                         }
                     }                    
                 }
                 .shopping{
                     @include size(27.3%, 25%);
-                    margin-left: 56%;
+                    margin-left: vw(1100);
                     padding-top: em(60,14);
                     h3{
                         @include font(rem(40),bold);
@@ -326,10 +419,10 @@ body{
                             border: 1px solid #707070;
                             @include font(rem(20), bold);
                             label{
-                                margin-right: 10px
+                                margin-right: vw(10)
                             }
                             select{
-                                width: 83px;
+                                width: vw(83);
                                 line-height: vh(62);
                                 @include font(rem(30), bold);
                                 -webkit-appearance: none; 
@@ -344,7 +437,7 @@ body{
                             border: 1px solid #707070;
                         }
                         .pick{
-                            margin-top: 60px;
+                            margin-top: vh(60);
                             @include size(100%, vh(62));
                             border: 1px solid #707070;
                         }
@@ -352,7 +445,7 @@ body{
                 }
                 .about{
                     @include size(27.3%, 50%);
-                    margin-left: 56%;
+                    margin-left: vw(1100);
                     padding: vh(200) 0;
                     .about_wrap{
                         padding: 20px;
@@ -363,6 +456,7 @@ body{
                         h3{
                             @include font(rem(30),bold);
                             font-family: 'poppins';
+                            animation: glowEffect 2s ease-in infinite;
                         }
                         h4{
                             @include font(rem(16),bold);
