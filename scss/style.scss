@@ -39,70 +39,11 @@
 @function vh($s){
     @return $s/10.24 +vh;
 }
-@keyframes reverse {
-    from{
-        z-index: 5;
-        width: 100vw;
-    }
-    to{
-        width: 40%;
-        z-index: 2;
-    }
-}
-
-@keyframes step1{
-    from{
-        width: 40%;
-        z-index: 2;
-    }
-    to{
-        z-index: 5;
-        width: 100vw;
-    }
-}
-@keyframes step2{
-    from{
-        transform: rotate(20deg);
-    }
-    to{
-        transform: translate(-50%, -50%) rotate(0deg);
-        left: 50%;
-        top: 50%;
-    }
-}
-@keyframes step3{
-    0%{
-        opacity: 1;
-    }
-    10%{
-        opacity: 0;
-    }
-    80%{
-        opacity: 0;
-        @include position(vh(150), 55%);
-    }
-    100%{
-        opacity: 1;
-        @include position(vh(150), 55%);
-    }
-}
-@keyframes step4{
-    0%{
-        opacity: 0.5;
-    }
-    50%{
-        opacity: 1;
-    }
-    100%{
-        opacity: 0.5;
-    }
-}
-
 
 body{
     font-family: 'Poppins',sans-serif;
     overflow-x: hidden;
-    @include font(rem(14), regular, #707070);
+    @include font(rem(14), normal, #707070);
     .inner{
         width: 1280px;
         margin: 0 auto;
@@ -133,12 +74,23 @@ body{
     main{
         #visual{
             .shoes{
+                width: 100vw;
                 display: flex;
                 >li{
                     position: relative;
                     @include size(25%, 100vh);
                     box-shadow: -1px 0px 6px rgba(0,0,0,0.5);
                     transition: 1s ease-in;
+                    .main_bg{
+                        @include size;
+                        transform: scaleX(0);
+                        transition: 1s;
+                        &.on{
+                            position: relative;
+                            z-index: 1;
+                            transform: scaleX(5)
+                        }
+                    }
                     .fixed{
                         .shoes_pic{
                             @include position(300px, 60px);
@@ -154,8 +106,8 @@ body{
                     .text{
                         width: 110%;
                         text-shadow: 0 1px 6px rgba(0,0,0,0.2);
-                        @include position(650px, 60px);
                         @include font(rem(50),bold);
+                        @include position(650px, 60px);
                         opacity: 0;
                         transition: 1s ease-in;
                         pointer-events: none;
@@ -169,11 +121,13 @@ body{
                         @include position(vh(800), 50%);
                         transform: translate(-50%);
                         opacity: 0;
-                        transition: 1s;
+                        cursor: pointer;
+                        p{
+                            pointer-events: none;
+                        }
                     }
                     &.hover{
                         width: 40%;
-                        z-index: 1;
                         .shoes_pic{
                             transform: rotate(20deg);
                         }
@@ -198,6 +152,7 @@ body{
                         .btn{
                             background: #823130;
                         }
+                        
                     }
                     &:nth-child(3){
                         background: #425194;
@@ -218,132 +173,209 @@ body{
                         }
                     }
                     &.on{
-                      animation: step1 1s 0.5s  ease-in forwards;
-                      .shoes_pic{
-                        animation: step2 0.5s 1.5s ease-in forwards;
-                      }
-                      .text{
-                        animation: step3 1s 2s ease-in forwards;
-                      }
-                      .btn{
-                        visibility: visible;
-                        animation: step4 2s 3s ease-in infinite;
-                      }
+                        width: 70vw;
+                        .shoes_pic{
+                            z-index: 2;
+                            transform: rotate(20deg);
+                        }
+                        .text{
+                            opacity: 1;
+                            z-index: 2;
+                            @include position(vh(130), 46%);
+                        }
+                        .btn{
+                            visibility: visible;
+                            transition: 1s 1s ease-in;
+                            opacity: 1;
+                        }
                     }
                 }
             }
         }
+        #video{
+            .video_wrap{
+                @include position(0, 0, fixed);
+                @include size(100vw, 0);
+                transition: 1s;
+                z-index: 5;
+                video{
+                    @include size;
+                    object-fit: cover;
+                }
+                &.on{
+                    height: 100vh;
+                }
+            }
+        }
         #subject{
-            height: 200vh;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            &.num0{
-                .change_bg{
-                    background: #E4E5E8;
-                    color: #707070;
-                }
-                h3{
-                    color: #aeaeae;
-                }
-            }
-            &.num1{
-                .change_bg{
-                    background: #BE4341;
-                    color: #ececec;
-                }
-                h3{
-                    color: #823130;
-                }
-            }
-            &.num2{
-                .change_bg{
-                    background: #425194;
-                    color: #ececec;
-                }
-                h3{
-                    color: #28315A;
-                }
-            }
-            &.num4{
-                .change_bg{
-                    background: #A97657;
-                    color: #ececec;
-                }
-                h3{
-                    color: #644532;
-                }
-            }
-            .shopping{
-                @include size(27.3%, 25%);
-                margin-top: 25%;
-                margin-left: 56%;
-                padding-top: em(60,14);
-                h3{
-                    @include font(rem(40),bold);
-                    margin-bottom: em(60,40);
-                }
-                .cart_box{
-                    @include flex(space-between);
-                    flex-wrap: wrap;
-                    @include font(rem(30), bold, #fff);
-                    text-align: center;
-                    line-height: vh(62);
+            .subject_wrap{
+                height: 200vh;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                &.premium{
+                    .change_bg{
+                        background: #E4E5E8;
+                        color: #707070;
+                        h2{
+                            color:#aeaeae;
+                        }
+                    }
                     .select{
-                        appearance: none;
-                        @include size(30.5%, vh(62));
-                        border: 1px solid #707070;
-                        @include font(rem(20), bold, #707070);
-                        label{
-                            margin-right: 10px
-                        }
+                        color: #707070;
                         select{
-                            width: 83px;
-                            line-height: vh(62);
-                            @include font(rem(30), bold, #707070);
-                            -webkit-appearance: none; 
-                            -moz-appearance: none; 
-                            appearance: none; 
-                            background: url(../images/icons/select_arrow.png) no-repeat 95% 50%;
-                            select::-ms-expand { display: none; }
+                            color: #707070;
                         }
                     }
-                    .cart{
-                        @include size(62.8%, vh(62));
-                        border: 1px solid #707070;
-                    }
-                    .pick{
-                        margin-top: 60px;
-                        @include size(100%, vh(62));
-                        border: 1px solid #707070;
+                    h3{
+                        color: #aeaeae;
                     }
                 }
-            }
-            .about{
-                @include size(27.3%, 50%);
-                margin-left: 56%;
-                padding: vh(166) 0;
-                .about_wrap{
-                    padding: 20px;
-                    display: grid;
-                    grid-template-rows: repeat(4,auto);
-                    row-gap: vh(40);
-                    font-family: 'noto sans cjk kr';
+                &.olympic{
+                    .change_bg{
+                        background: #BE4341;
+                        color: #ececec;
+                        h2{
+                            color:#823130;
+                        }
+                    }
+                    .select{
+                        color: #823130;
+                        select{
+                            color: #823130;
+                        }
+                    }
                     h3{
-                        @include font(rem(30),bold);
-                        font-family: 'poppins';
+                        color: #823130;
                     }
-                    h4{
-                        @include font(rem(16),bold);
-                        margin-bottom: em(14,16);
+                }
+                &.persian{
+                    .change_bg{
+                        background: #425194;
+                        color: #ececec;
+                        h2{
+                            color:#28315A;
+                        }
                     }
-                    p{
-                        @include font(rem(14),regular);
-                        line-height: em(20,14);
+                    .select{
+                        color: #28315A;
+                        select{
+                            color: #28315A;
+                        }
                     }
-                    li{
-                        list-style: inside;
-                        margin-bottom: 5px;
+                    h3{
+                        color: #28315A;
+                    }
+                }
+                &.flax{
+                    .change_bg{
+                        background: #A97657;
+                        color: #ececec;
+                        h2{
+                            color:#644532;
+                        } 
+                    }
+                    .select{
+                        color: #644532;
+                        select{
+                            color: #644532;
+                        }
+                    }
+                    h3{
+                        color: #644532;
+                    }
+                }
+                .subject_bg{
+                    @include size(100vw, 25%);
+                    h2{
+                        margin-left: 56%;
+                        margin-top: 10%;
+                        text-shadow: 0 1px 6px rgba(0,0,0,0.2);
+                        @include font(rem(80),bold);
+                    }
+                }
+                .pic{
+                    @include position(30vh, 16.7%, absolute);
+                    .detail{
+                        @include flex(space-between);
+                        @include size(100%, vh(120));
+                        margin-top: vh(160);
+                        li{
+                            @include size(vh(120), vh(120));
+                            border: 1px solid #707070;
+                        }
+                    }                    
+                }
+                .shopping{
+                    @include size(27.3%, 25%);
+                    margin-left: 56%;
+                    padding-top: em(60,14);
+                    h3{
+                        @include font(rem(40),bold);
+                        margin-bottom: em(60,40);
+                    }
+                    .cart_box{
+                        @include flex(space-between);
+                        flex-wrap: wrap;
+                        @include font(rem(30), bold, #fff);
+                        text-align: center;
+                        line-height: vh(62);
+                        .select{
+                            appearance: none;
+                            @include size(30.5%, vh(62));
+                            border: 1px solid #707070;
+                            @include font(rem(20), bold);
+                            label{
+                                margin-right: 10px
+                            }
+                            select{
+                                width: 83px;
+                                line-height: vh(62);
+                                @include font(rem(30), bold);
+                                -webkit-appearance: none; 
+                                -moz-appearance: none; 
+                                appearance: none; 
+                                background: url(../images/icons/select_arrow.png) no-repeat 95% 50%;
+                                select::-ms-expand { display: none; }
+                            }
+                        }
+                        .cart{
+                            @include size(62.8%, vh(62));
+                            border: 1px solid #707070;
+                        }
+                        .pick{
+                            margin-top: 60px;
+                            @include size(100%, vh(62));
+                            border: 1px solid #707070;
+                        }
+                    }
+                }
+                .about{
+                    @include size(27.3%, 50%);
+                    margin-left: 56%;
+                    padding: vh(200) 0;
+                    .about_wrap{
+                        padding: 20px;
+                        display: grid;
+                        grid-template-rows: repeat(4,auto);
+                        row-gap: vh(40);
+                        font-family: 'noto sans cjk kr';
+                        h3{
+                            @include font(rem(30),bold);
+                            font-family: 'poppins';
+                        }
+                        h4{
+                            @include font(rem(16),bold);
+                            margin-bottom: em(14,16);
+                        }
+                        p{
+                            @include font(rem(14),normal);
+                            line-height: em(20,14);
+                        }
+                        li{
+                            list-style: inside;
+                            margin-bottom: 5px;
+                        }
                     }
                 }
             }
