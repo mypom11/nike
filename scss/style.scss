@@ -157,6 +157,7 @@ body{
                     @include size(25%, 100vh);
                     box-shadow: -1px 0px 6px rgba(0,0,0,0.5);
                     transition: 1s ease-in;
+                    cursor:pointer;
                     .main_bg{
                         @include size;
                         transform: scaleX(0);
@@ -252,6 +253,7 @@ body{
                     }
                     &.on{
                         width: 70vw;
+                        cursor:auto;
                         .shoes_pic{
                             z-index: 2;
                             transform: rotate(20deg);
@@ -452,7 +454,7 @@ body{
                         display: grid;
                         grid-template-rows: repeat(4,auto);
                         row-gap: vh(40);
-                        font-family: 'noto sans cjk kr';
+                        font-family: 'Noto Sans KR';
                         h3{
                             @include font(rem(30),bold);
                             font-family: 'poppins';
