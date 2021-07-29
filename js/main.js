@@ -134,7 +134,7 @@ function moveAnimation(){
 }
 
 //스크롤 이벤트
-
+let speedHandler=0;
 let current = 0;
 //current 범위 정하기
 function currentNum(){
@@ -146,15 +146,29 @@ function currentNum(){
 }
 
 //메인 휠 이벤트
+
+window.addEventListener("wheel", function (event) {
+    event.preventDefault();
+  }, { passive: false });
+
+
 $('html').on('wheel',function (e){
     if(e.originalEvent.deltaY < 0){
-        current--
-        currentNum()
-        wheelMove()
+        speedHandler--
+        if(speedHandler<-30){
+            current--
+            currentNum()
+            wheelMove()
+            speedHandler=0
+        }
     }else{
-        current++
-        currentNum()
-        wheelMove()
+        speedHandler++
+        if(speedHandler>30){
+            current++
+            currentNum()
+            wheelMove()
+            speedHandler=0
+        }
     }
 })
 
