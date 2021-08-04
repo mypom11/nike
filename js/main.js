@@ -136,6 +136,7 @@ function moveAnimation(){
 //스크롤 이벤트
 let speedHandler=0;
 let current = 0;
+let speed = 10;
 //current 범위 정하기
 function currentNum(){
     if(current < 0){
@@ -155,7 +156,7 @@ window.addEventListener("wheel", function (event) {
 $('html').on('wheel',function (e){
     if(e.originalEvent.deltaY < 0){
         speedHandler--
-        if(speedHandler<-30){
+        if(speedHandler<-speed){
             current--
             currentNum()
             wheelMove()
@@ -163,7 +164,7 @@ $('html').on('wheel',function (e){
         }
     }else{
         speedHandler++
-        if(speedHandler>30){
+        if(speedHandler>speed){
             current++
             currentNum()
             wheelMove()
